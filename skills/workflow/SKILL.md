@@ -1,6 +1,6 @@
 ---
 name: workflow
-description: "Default skill for any new feature or requirement. If the user describes a problem, feature, or change they want — and no design or spec exists yet — use this skill. Trigger examples: 'we need to add caching to the API', 'users are requesting dark mode', 'I want to refactor the auth system', 'let's build X', 'new feature', 'I have a requirement', or any problem description where the solution is not yet designed. This is the entry point for all implementation work that hasn't been planned yet. Do NOT trigger if the user already has a confirmed design/spec and just wants tasks — that's task-breakdown. Do NOT trigger if the user explicitly says they only want the design/spec without tasks — that's requirement-design."
+description: "Default entry point for any new feature or requirement with no existing design. Trigger: 'add X to the API', 'build X', 'new requirement', any problem where the solution isn't designed yet. Runs design → task breakdown in sequence. Do NOT trigger if design already confirmed — use task-breakdown. Do NOT trigger if user only wants a spec — use design."
 ---
 
 # Workflow: Design → Task Breakdown
