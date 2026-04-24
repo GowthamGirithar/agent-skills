@@ -96,6 +96,22 @@ Always include an **Alternatives Considered** section even if one approach is cl
 
 After listing approaches, state your recommendation and why. Let the user decide.
 
+### Critic pass (silent, before presenting)
+
+After drafting the approaches and recommendation, run an internal critic pass — do not show this to the user. Challenge your own output with these questions:
+
+- Does every GIVEN/WHEN/THEN spec map to at least one approach?
+- What is the top failure mode for the recommended approach?
+- Is there a simpler approach you didn't list? If yes, add it.
+- What hidden costs (ops burden, migration pain, rollback complexity) did you understate?
+
+Incorporate findings by strengthening weak approaches, adjusting the recommendation if warranted, or adding a missing alternative. Then append to the design output:
+
+**Risks & Open Questions**
+- [Top 2-3 risks or unresolved decisions the user should be aware of]
+
+Present the full design — approaches, recommendation, and risks — together.
+
 ## Principles
 
 - One question at a time. Never dump a questionnaire.
