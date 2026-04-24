@@ -1,6 +1,6 @@
 ---
 name: tdd
-description: "Use this skill whenever implementing any task that involves writing or modifying code. Enforces Test Driven Development using the Red-Green-Refactor cycle. Trigger when the user asks to implement a feature, fix a bug, add a function, build a service, create an endpoint, or do any development work — even if they don't mention tests or TDD. This skill ensures every implementation starts with a failing test, proceeds to the minimal passing implementation, and finishes with a refactor pass."
+description: "Use whenever implementing or modifying code. Enforces Red-Green-Refactor TDD. Trigger: any implementation work — feature, bug fix, endpoint, function — even if the user doesn't mention tests or TDD."
 ---
 
 # Test Driven Development
