@@ -1,6 +1,6 @@
 ---
 name: design
-description: "Use this skill when the user explicitly wants ONLY the design or requirement clarification — without task breakdown afterward. Trigger when the user says 'clarify requirements', 'help me design this', 'what are the approaches', 'write a spec', 'just the design', or 'I only need the spec not the tasks'. The key signal: the user wants to stop after design, not continue to task breakdown. Do NOT trigger when the user wants end-to-end handling (new feature, plan for X) — that's the workflow skill. Do NOT trigger for bug fixes with obvious root cause or tasks where the solution is already clear."
+description: "Use when the user wants ONLY a design or spec — no task breakdown. Key signal: user explicitly wants to stop after design. Trigger: 'clarify requirements', 'write a spec', 'help me design', 'just the spec'. Do NOT trigger for end-to-end work ('new feature', 'let's build X') — that's workflow. Do NOT trigger when the solution is already clear."
 ---
 
 #  Design
