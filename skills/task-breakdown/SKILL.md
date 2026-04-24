@@ -1,6 +1,6 @@
 ---
 name: task-breakdown
-description: "Use this skill when the user already has a completed design or spec and wants to break it into tasks. The key signal: the design/spec already exists — the user is past the clarification phase. Trigger when the user says 'break this into tasks', 'create tickets', 'split this into work items', or provides a design document and asks for implementation planning. Also trigger when the user shares a spec/design from a previous conversation and says 'now break this down'. Do NOT trigger when there is no existing design — that's the workflow skill."
+description: "Use when the user has a completed design or spec and wants it split into implementable tasks. Key signal: spec already exists, user is past clarification. Trigger: 'break into tasks', 'create tickets', 'split into work items'. Do NOT trigger without an existing design — use workflow instead."
 ---
 
 # Task Breakdown
