@@ -45,6 +45,9 @@ Follow the **design** skill end-to-end:
 ## Goals & Constraints
 [goals, constraints, non-goals]
 
+## Assumptions
+[assumptions surfaced during interview, confirmed by user]
+
 ## Spec
 [GIVEN/WHEN/THEN]
 ```

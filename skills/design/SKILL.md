@@ -48,7 +48,7 @@ Keep asking until you and the user have covered:
 
 Stop when both sides have shared understanding. Not before.
 
-## Phase 3: Goals and Constraints
+## Phase 3: Goals, Constraints, and Assumptions
 
 After the interview, list:
 
@@ -56,9 +56,20 @@ After the interview, list:
 
 **Constraints** -- hard limits. Backward compatibility. Things that narrow the solution space.
 
+**Assumptions** -- things you are treating as true based on the interview or codebase exploration, but that weren't explicitly stated in the requirements. These are decisions or interpretations that could be wrong. Surfacing them now prevents silent misunderstandings from becoming bugs later.
+
+Examples of assumptions worth surfacing:
+- Data availability: "Subtotals are populated before GetPricing is called"
+- Field semantics: "OriginalPrice is the pre-discount gross unit price, not total"
+- Domain rules: "Combo child products are items, not optional add-ons"
+- Ordering: "Base calculation always runs before incentive calculation"
+- Absence: "No pre-computed net/VAT split exists on the cart at this point"
+
+If the user corrects an assumption, update the design accordingly. If they confirm, the assumption becomes a documented fact that downstream tasks can rely on.
+
 **Non-goals** -- what this requirement explicitly does NOT do. Prevents scope creep.
 
-Get user confirmation on this list before proceeding.
+Get user confirmation on all four sections before proceeding.
 
 ## Phase 4: Spec (GIVEN / WHEN / THEN)
 
@@ -106,6 +117,9 @@ After drafting the approaches and recommendation, run an internal critic pass â€
 - What is the top failure mode for the recommended approach?
 - Did you consider a simplification approach â€” one that removes or restructures existing code rather than extending it? If not, and one is plausible, add it.
 - What hidden costs (ops burden, migration pain, rollback complexity) did you understate?
+- **Security**: Does the design introduce new attack surfaces, auth/authz gaps, or data exposure risks? Are inputs validated at trust boundaries?
+- **Performance**: Does it scale under expected load? Are there N+1 queries, hot paths, unbounded loops, or missing indexes? Will it degrade gracefully under pressure?
+- **Operability**: Can this be monitored and debugged in production? Are there sufficient logs/metrics at decision points? Can it be rolled back without data loss?
 
 Incorporate findings by strengthening weak approaches, adjusting the recommendation if warranted, or adding a missing alternative. Then append to the design output:
 

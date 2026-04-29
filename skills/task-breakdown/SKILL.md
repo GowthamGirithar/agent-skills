@@ -16,6 +16,7 @@ Read the design output (from the requirement-design skill or whatever the user p
 - API surface changes
 - Infrastructure/config changes
 - Migration needs
+- Documentation impact — identify READMEs, API docs, runbooks, ADRs, or config references that will need updating based on the changes above
 
 Map each change to the files it touches. Use subagents (Explore type) to identify exact file paths and understand the current code structure.
 
@@ -44,7 +45,7 @@ Track C (parallel, blocked by A2):
 
 ## Phase 3: Define Tasks
 
-Each task follows this structure. Every field is required — a task missing any of them is not a standalone work order and will produce vague or incomplete code when picked up cold.
+Each task follows the template below. Every field is required — no exceptions. The reason: a background agent reads this task cold with zero context. If a field is missing, the agent guesses, and guesses produce bugs. These fields aren't boilerplate — they're the difference between a task that ships and a task that gets sent back.
 
 ### Task Template
 
@@ -78,10 +79,29 @@ Follow the TDD skill for each step. List the steps here:
    Commit: `[commit message]`
 (Each step = one TDD cycle + one commit)
 
+**Documentation:**
+- `path/to/README.md` — update API usage examples
+- `path/to/docs/runbook.md` — add new alert handling section
+(List docs that need updating due to this task's changes. Include READMEs, API docs, runbooks, ADRs, or config references. Write "none" if no doc changes needed.)
+
 **Verification:**
 - [ ] All tests pass
+- [ ] Documentation updated matches the code changes
 - [ ] [Specific check relevant to this task]
 ```
+
+### Why each field matters
+
+These explanations exist so you understand the purpose of each field — not as optional commentary.
+
+- **Track / Blocked by / Blocks:** Without these on each task, the agent or developer doesn't know what to wait for or what to start. The dependency graph alone isn't enough — each task must carry its own placement info.
+- **Goal:** Forces clarity. If you can't say what a task achieves in one sentence, the task is too vague or too broad.
+- **Constraints:** A background agent doesn't know the project's unwritten rules. Write them down per task — things like "must not break backward compatibility", "must use existing database connection pool", "proto dependency must be bumped first".
+- **Spec (GIVEN/WHEN/THEN):** This is the most important field. The overall design has specs, but each task must carry the subset of specs it implements. A background agent won't read the design doc. It reads this task. If the spec isn't here, the agent implements something that compiles but doesn't match the requirement. Copy the relevant specs from the design — don't summarize, don't paraphrase, carry them over exactly.
+- **Files to touch:** Not just filenames — describe what changes in each file. "get_pricing.go — add mapItemCharge function" tells the agent where to work and what to add.
+- **Implementation plan with per-step commits:** Each step is one TDD cycle. One commit per step means if something breaks, you lose one step, not the whole task. List what to test and implement at each step, with the commit message.
+- **Documentation:** Code changes often require doc updates — a new function needs API doc updates, a new config flag needs runbook entries, a behavioral change needs README updates. If you don't flag these, they get forgotten until someone discovers stale docs in production. Explicitly write "none" if no docs need updating so it's clear you considered it.
+- **Verification:** A checklist the agent runs through before marking the task done. Include task-specific checks beyond "tests pass" — things like "new charge types appear in the proto import", "zero-value fees produce no charge entry".
 
 ### Task Rules
 
@@ -97,18 +117,21 @@ Follow the TDD skill for each step. List the steps here:
 
 **Implementation order.** Number tasks in the order they should be executed. Sequential tasks get consecutive numbers on the same track. Parallel tracks can start simultaneously.
 
-### Self-check before presenting tasks
+## Pre-presentation gate
 
-Before presenting the task list to the user, silently verify every task has all required fields:
-- Track, Blocked by, Blocks
-- Goal (one sentence)
-- Constraints
-- Spec (at least one GIVEN/WHEN/THEN)
-- Files to touch (with descriptions)
-- Implementation plan (numbered steps, each with a commit message)
-- Verification checklist
+Before presenting the task list to the user, stop and verify every task against this checklist. Do not present tasks until every box is checked for every task.
 
-If any field is missing, complete it before presenting. Never present an informal summary in place of the full template.
+For each task, confirm:
+- [ ] Has Track, Blocked by, Blocks
+- [ ] Has Goal (one sentence, not a paragraph)
+- [ ] Has Constraints (at least one, or explicitly "none")
+- [ ] Has Spec with at least one GIVEN/WHEN/THEN (copied from the design, not summarized)
+- [ ] Has Files to touch with descriptions of what changes (not just filenames)
+- [ ] Has Implementation plan with numbered steps, each with a commit message
+- [ ] Has Documentation listing docs to update or explicitly "none"
+- [ ] Has Verification checklist with task-specific checks
+
+If any field is missing on any task, fill it in before presenting. Never present an informal summary, a simplified format, or a "condensed" version in place of the full template. The template is the deliverable.
 
 ## Phase 4: Review with User
 
@@ -136,6 +159,8 @@ If user says yes:
    - Spec (GIVEN/WHEN/THEN)
    - Implementation plan (with commit points)
    - Files to touch
+   - Documentation
+   - Verification checklist
 
 3. **Link dependencies** between subtasks that are sequential (use Atlassian MCP `createIssueLink` with "Blocks" link type). For tasks where A must complete before B:
    - inwardIssue = A (the blocker)
@@ -153,3 +178,4 @@ If user says no, output the task breakdown as markdown. The breakdown is the del
 - Sequential dependencies are real. Don't pretend things are parallel when they share state.
 - 10-file limit is a smell test. If you need more, the task is doing too much.
 - Commit early, commit often. Each TDD cycle = one commit.
+- The template exists because shortcuts here create rework downstream. Every skipped field is a question a background agent has to guess at — and guesses are bugs waiting to happen.
