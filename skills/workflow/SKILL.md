@@ -210,7 +210,10 @@ After the task list is confirmed, ask:
 
 ### Step 4: Local Implementation — Task Execution Loop
 
-Read `references/local-implementation.md` for the full Task Execution Loop — branch setup, `tasks.json` structure, per-task Red-Green-Refactor cycle, and completion steps.
+**Before writing a single line of code:** use the Read tool to load `references/local-implementation.md` into your context now. Then follow every step in that file in order — branch first, tasks.json second, then the per-task RED→GREEN→REFACTOR→verify→commit loop. Do not rely on memory of the reference; load it and execute it step by step.
+
+The first gate in that file is asking the user for a branch name. That gate is not optional.
+
 
 ### Step 5: Revision
 
