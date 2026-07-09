@@ -59,10 +59,10 @@ After the interview, list:
 **Assumptions** -- things you are treating as true based on the interview or codebase exploration, but that weren't explicitly stated in the requirements. These are decisions or interpretations that could be wrong. Surfacing them now prevents silent misunderstandings from becoming bugs later.
 
 Examples of assumptions worth surfacing:
-- Data availability: "Subtotals are populated before GetPricing is called"
+- Data availability: "Subtotals are populated before API is called"
 - Field semantics: "OriginalPrice is the pre-discount gross unit price, not total"
-- Domain rules: "Combo child products are items, not optional add-ons"
-- Ordering: "Base calculation always runs before incentive calculation"
+- Domain rules: "child products are items, not optional add-ons"
+- Ordering: "Base calculation always runs applying any discounts"
 - Absence: "No pre-computed net/VAT split exists on the cart at this point"
 
 If the user corrects an assumption, update the design accordingly. If they confirm, the assumption becomes a documented fact that downstream tasks can rely on.
