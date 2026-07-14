@@ -2,6 +2,48 @@
 
 A collection of skills that enforce a structured software engineering workflow: from requirement clarification through design, task breakdown, and test-driven implementation — with per-feature stage documents, a manifest for status tracking, and a changelog for traceability.
 
+## Installation
+
+### Option 1 — Claude Code plugin (recommended)
+
+Read-only, always-current. Install once, then pull updates with `/plugin update`.
+
+```
+/plugin marketplace add GowthamGirithar/agent-skills
+/plugin install agent-skills@gowtham
+```
+
+Or from the shell:
+
+```bash
+claude plugin marketplace add GowthamGirithar/agent-skills
+claude plugin install agent-skills@gowtham
+```
+
+### Option 2 — `skills` CLI (cross-agent, editable)
+
+A generic installer that works with 20+ agents (Claude Code, Cursor, Copilot,
+and more). Pick the skills and target agent interactively; it copies editable
+files into your project.
+
+```bash
+npx skills@latest add GowthamGirithar/agent-skills
+```
+
+### Option 3 — Copy into a repo manually (editable)
+
+Copies the skill folders into a project so you can customize them. Claude Code
+discovers skills under `.claude/skills/`, so copy there:
+
+```bash
+git clone https://github.com/GowthamGirithar/agent-skills /tmp/agent-skills
+mkdir -p .claude/skills
+cp -R /tmp/agent-skills/skills/* .claude/skills/
+```
+
+Use `~/.claude/skills/` instead of `.claude/skills/` to install for your user
+across all projects. Commit `.claude/skills/` to share with your team.
+
 ## Skills
 
 ### workflow
@@ -91,6 +133,9 @@ Updated downstream stages drop back to `draft` and need explicit confirmation ag
 ## Structure
 
 ```
+.claude-plugin/
+├── marketplace.json         # Marketplace entry (enables /plugin marketplace add)
+└── plugin.json              # Plugin manifest (name, version, metadata)
 skills/
 ├── workflow/SKILL.md        # Pipeline orchestrator + manifest/changelog management
 ├── design/SKILL.md          # Requirement clarification & design
