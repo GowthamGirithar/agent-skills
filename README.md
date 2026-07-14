@@ -2,6 +2,8 @@
 
 A collection of skills that enforce a structured software engineering workflow: from requirement clarification through design, task breakdown, and test-driven implementation — with per-feature stage documents, a manifest for status tracking, and a changelog for traceability.
 
+See [docs/EVOLUTION.md](docs/EVOLUTION.md) for the design rationale — why vibe coding and existing spec-driven tools fell short, and how this workflow's architecture addresses those gaps.
+
 ## Installation
 
 ### Option 1 — Claude Code plugin (recommended)
