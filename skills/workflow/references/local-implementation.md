@@ -2,6 +2,17 @@
 
 The Task Execution Loop executes the confirmed task list locally — one task at a time. No re-analysis. The tasks are already designed; the only job here is to implement them correctly.
 
+## Autonomy Contract
+
+There is exactly one gate in this loop: asking the user for a branch name during Setup. Once the branch exists, run the entire task list to completion **without pausing for confirmation** — do not ask "shall I continue?", do not wait for approval to commit, do not stop between tasks. The tasks and design are already confirmed; stopping to check in would only stall a plan the user already approved.
+
+Stop early only for a genuine blocker that makes correct progress impossible:
+- The current task's description is ambiguous or contradicts the code, and no reasonable interpretation is safe.
+- A test cannot be made to pass without a decision the task doesn't cover (missing dependency, external credential, a design gap).
+- An action would be destructive or irreversible beyond the task's scope.
+
+When you stop, say which task you stopped on and exactly what you need. Everything else — normal test failures, refactors, choosing between equivalent implementations — is yours to resolve inside the loop without asking.
+
 ## Setup
 
 1. **Create a branch** — Ask the user for a branch name, or derive one from the feature slug. Create and check it out:
@@ -30,7 +41,7 @@ Execute in dependency order — a task is eligible only when all its `depends_on
 
 ## Per-Task Loop
 
-For each eligible task:
+Run this loop unattended, task after task, until all tasks are `done` or a genuine blocker (see Autonomy Contract) forces a stop. For each eligible task:
 
 1. **Read** — Load the task. Mark it `in_progress` in `tasks.json`.
 
@@ -45,7 +56,7 @@ For each eligible task:
 
 5. **Mark done** — Update `status` to `done` in `tasks.json`. Pick the next eligible task.
 
-6. **Clear context** — Once a task is committed and marked `done`, its implementation detail (file reads, test output, diffs) has no further use — everything that matters is now in git and in `tasks.json`. Compact/clear context before starting the next task.
+6. **Clear context** — Once a task is committed and marked `done`, its implementation detail (file reads, test output, diffs) has no further use — everything that matters is now in git and in `tasks.json`. Clear/compact context before starting the next task so it doesn't accumulate across the run. This is what keeps a long task list from overloading a single context: each task starts lean, reading only `tasks.json` and the current code. Clearing context is part of the loop, not an interruption of it — do it automatically, without asking.
 
 Repeat until all tasks are `done`.
 

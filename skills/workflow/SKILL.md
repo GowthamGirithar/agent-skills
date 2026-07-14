@@ -44,11 +44,12 @@ The manifest tracks the current status of each stage. It is the single source of
 ```markdown
 # <Feature Name> — Manifest
 
-| Stage  | Status    |
-|--------|-----------|
-| Spec   | confirmed |
-| Design | draft     |
-| Tasks  | pending   |
+| Stage          | Status    |
+|----------------|-----------|
+| Spec           | confirmed |
+| Design         | draft     |
+| Tasks          | pending   |
+| Implementation | pending   |
 ```
 
 **Three statuses:**
@@ -218,7 +219,7 @@ After the task list is confirmed, ask:
 
 **Before writing a single line of code:** use the Read tool to load `references/local-implementation.md` into your context now. Then follow every step in that file in order — branch first, tasks.json second, then the per-task RED→GREEN→REFACTOR→verify→commit loop. Do not rely on memory of the reference; load it and execute it step by step.
 
-The first gate in that file is asking the user for a branch name. That gate is not optional.
+The first step in that file is asking the user for a branch name — this is the **only** gate in the loop and is not optional. Once the branch exists, the loop runs fully autonomously to completion (implement → verify → commit → clear context → next task), stopping only for a genuine blocker. See the Autonomy Contract in that file.
 
 
 ### Step 5: Revision
