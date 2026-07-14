@@ -1,0 +1,20 @@
+{
+  "name": "agent-skills",
+  "version": "0.1.0",
+  "description": "A structured software engineering workflow: from requirement clarification through design, task breakdown, and test-driven implementation.",
+  "author": {
+    "name": "Gowtham Girithar",
+    "url": "https://github.com/GowthamGirithar"
+  },
+  "homepage": "https://github.com/GowthamGirithar/agent-skills",
+  "repository": "https://github.com/GowthamGirithar/agent-skills",
+  "license": "MIT",
+  "keywords": [
+    "engineering",
+    "skills",
+    "workflow",
+    "design",
+    "task-breakdown",
+    "tdd"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "gowtham",
+  "owner": {
+    "name": "Gowtham Girithar",
+    "url": "https://github.com/GowthamGirithar"
+  },
+  "description": "A structured software engineering workflow as installable Claude Code skills: design → task breakdown → test-driven implementation.",
+  "plugins": [
+    {
+      "name": "agent-skills",
+      "source": "./",
+      "description": "Skills that enforce a structured engineering pipeline — requirement clarification, architectural design, self-contained task breakdown, and Red-Green-Refactor TDD, with per-feature stage documents and status tracking.",
+      "category": "engineering",
+      "keywords": [
+        "engineering",
+        "skills",
+        "workflow",
+        "design",
+        "task-breakdown",
+        "tdd"
+      ]
+    }
+  ]
+}
