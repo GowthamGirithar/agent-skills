@@ -30,20 +30,6 @@ files into your project.
 npx skills@latest add GowthamGirithar/agent-skills
 ```
 
-### Option 3 — Copy into a repo manually (editable)
-
-Copies the skill folders into a project so you can customize them. Claude Code
-discovers skills under `.claude/skills/`, so copy there:
-
-```bash
-git clone https://github.com/GowthamGirithar/agent-skills /tmp/agent-skills
-mkdir -p .claude/skills
-cp -R /tmp/agent-skills/skills/* .claude/skills/
-```
-
-Use `~/.claude/skills/` instead of `.claude/skills/` to install for your user
-across all projects. Commit `.claude/skills/` to share with your team.
-
 ## Skills
 
 ### workflow
