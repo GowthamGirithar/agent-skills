@@ -71,11 +71,14 @@ Update the manifest immediately after every status change.
 # <Feature Name> — Changelog
 
 ## [Date] — [Stage] [created | updated]
+Model: [model-id that produced this change]
 Trigger: [why — user feedback, implementation discovery, new requirement]
 Summary: [one-line description of what changed]
 ```
 
 The changelog exists so someone scanning the feature folder can quickly understand how it evolved without reading git diffs.
+
+**Provenance fields.** `spec.md`, `design.md`, and `tasks.md` each carry a `**Last updated:** … · **Model:** …` header, and every changelog entry records the model. Use the exact model id of the session producing the change (from your system prompt, e.g. `claude-opus-4-8`) and the current date. This matters because a feature can span sessions and models — a stage authored by an older model may deserve a fresh look, and the header tells a reader how stale the artifact is at a glance. Bump `Last updated` on every in-place edit, including cascade updates. The manifest stays status-only — dates and model live on the docs and in the changelog, so each fact has one home.
 
 ### Updating Documents
 
@@ -108,7 +111,7 @@ Stages that remain valid don't need changes — note in the changelog why they'r
 
 Before the first interview question:
 
-1. Derive a feature slug from the user's initial description. Use lowercase, hyphen-separated words (e.g., `enable-inorch-get-pricing`, `cart-checkout-validation`).
+1. Derive a feature slug from the user's initial description. Use lowercase, hyphen-separated words (e.g., `enable-employee-accounts-flow`, `cart-validation`).
 2. Create the feature folder:
    ```
    docs/<feature-slug>/
@@ -131,6 +134,7 @@ Follow the **design** skill end-to-end:
 Write `spec.md`:
 ```markdown
 # <Feature Name> — Spec
+**Last updated:** <YYYY-MM-DD> · **Model:** <model-id>
 
 ## Background
 [status quo and motivation]
@@ -156,6 +160,7 @@ Append to changelog.
 Write `design.md`:
 ```markdown
 # <Feature Name> — Design
+**Last updated:** <YYYY-MM-DD> · **Model:** <model-id>
 
 ## Approaches Considered
 [all approaches with pros/cons]
@@ -188,6 +193,7 @@ Feed the confirmed design into the **task-breakdown** skill:
 Write `tasks.md`:
 ```markdown
 # <Feature Name> — Tasks
+**Last updated:** <YYYY-MM-DD> · **Model:** <model-id>
 
 ## Dependency Graph
 [tracks and dependencies]

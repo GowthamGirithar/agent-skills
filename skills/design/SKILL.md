@@ -121,12 +121,43 @@ After drafting the approaches and recommendation, run an internal critic pass �
 - **Performance**: Does it scale under expected load? Are there N+1 queries, hot paths, unbounded loops, or missing indexes? Will it degrade gracefully under pressure?
 - **Operability**: Can this be monitored and debugged in production? Are there sufficient logs/metrics at decision points? Can it be rolled back without data loss?
 
+Then run the anti-anchoring step. You just wrote the recommendation, so you're biased toward defending it — this step forces you past that: argue for killing your recommended approach. Then pick the strongest rejected alternative and make the best case for it. If that case wins, switch.
+
 Incorporate findings by strengthening weak approaches, adjusting the recommendation if warranted, or adding a missing alternative. Then append to the design output:
 
 **Risks & Open Questions**
 - [Top 2-3 risks or unresolved decisions the user should be aware of]
 
-Present the full design — approaches, recommendation, and risks — together.
+**ADR Candidates**
+
+The most valuable ADR candidates are the things the user *said* during the interview that aren't written down anywhere — the reasoning behind a decision that lives only in this conversation, not in the code, comments, or docs. When the user explains why the system works a certain way, why an obvious-looking alternative was ruled out, or a constraint that isn't visible from reading the code ("we can't touch that table because another team owns it", "this has to stay synchronous because downstream expects it"), that "why" evaporates once the change lands. Capturing it is exactly what an ADR is for. Watch the interview for these and flag them.
+
+Also include design-side decisions whose rationale would otherwise be lost — the confirmed assumptions in Phase 3, the approach chosen in Phase 5, the alternatives rejected and why.
+
+An ADR candidate is a decision or rationale that is expensive to reverse, constrains future work, or that a future engineer would otherwise ask "why was it done this way?" about. Skip things that are obvious, easily changed, or already evident from the code — not everything is ADR-worthy, and a list padded with trivia buries the ones that matter.
+
+For each candidate, give one line: the decision/rationale and where it came from.
+- [Decision or rationale] — [why it matters / who said it]
+
+These are recommendations, not filed records. The user decides which to formalize.
+
+**Project Memory Candidates (CLAUDE.md / AGENTS.md)**
+
+Distinct from ADRs: an ADR records *why a past decision was made*; project memory tells the *next agent how to work in this codebase*. During the interview the user often reveals operational knowledge that isn't written down and that a future agent would waste time rediscovering — or get wrong. Flag these as candidates to add to CLAUDE.md (or AGENTS.md, whichever the repo uses).
+
+Watch for:
+- **Conventions** the user states as expected — "we always use the repository pattern for data access", "handlers never call the DB directly".
+- **Gotchas and landmines** — "that file is generated, edit the template instead", "the integration tests need the VPN up", "don't bump that dependency, it breaks X".
+- **Commands and workflows** not discoverable from config — how to build, test, run migrations, regenerate code.
+- **Boundaries** — "another team owns that service, coordinate before changing its contract".
+
+An item belongs here if a fresh agent, dropped into this repo tomorrow, would benefit from knowing it up front. Skip anything already documented or obvious from a glance at the code. Check whether a CLAUDE.md / AGENTS.md already exists and note if the candidate refines an existing entry rather than adding a new one.
+
+- [Guidance for future agents] — [file it belongs in, and why]
+
+Recommendations only — the user decides what to write.
+
+Present the full design — approaches, recommendation, risks, ADR candidates, and project memory candidates — together.
 
 ## Principles
 
