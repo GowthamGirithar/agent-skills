@@ -48,97 +48,36 @@ across all projects. Commit `.claude/skills/` to share with your team.
 
 ### workflow
 
-**Entry point for new work.** Orchestrates the full pipeline: design → task breakdown → (optional) Jira. Creates a per-feature folder with one document per stage (`spec.md`, `design.md`, `tasks.md`), a `manifest.md` status tracker, and a `changelog.md`. Documents are updated in-place — git tracks the diff history.
-
-Trigger: "add X to the API", "build X", "new requirement"
-
-### design
-
-Requirement clarification and architectural design. Runs an interview (one question at a time, with recommendations), surfaces assumptions, produces GIVEN/WHEN/THEN specs, and evaluates design approaches with pros/cons.
-
-Trigger: "clarify requirements", "write a spec", "help me design"
-
-### task-breakdown
-
-Splits a confirmed design into self-contained, implementable tasks. Each task is a standalone work order — complete enough that an agent picks it up cold and delivers working code. Includes dependency graphs, per-task specs, documentation impact, and Jira integration.
-
-Trigger: "break into tasks", "create tickets", "split into work items"
-
-### tdd
-
-Enforces Red-Green-Refactor TDD for all implementation work. Guides the cycle: write a failing test (RED), implement minimum code to pass (GREEN), clean up (REFACTOR). Covers test naming (DAMP), Arrange-Act-Assert structure, and language-specific conventions.
-
-Trigger: any implementation work — feature, bug fix, endpoint, function
-
-## Pipeline
+**Entry point for new work.** Orchestrates the full pipeline, sequencing the other skills and enforcing a confirmation gate between every phase — no skipping. Each feature gets a folder with one document per stage (`spec.md`, `design.md`, `tasks.md`), a `manifest.md` status tracker, and a `changelog.md`; documents are updated in-place and git tracks the diff history.
 
 ```
 requirement (user)
-  → workflow
-      → Step 0: Derive feature slug, create folder + manifest + changelog
-      → design
-          1. Explore status quo
-          2. Interview (one question at a time)
-          3. Goals / Constraints / Assumptions / Non-goals
-          4. Spec (GIVEN/WHEN/THEN) → write spec.md, manifest: Spec=confirmed
-          5. Design (approaches, pros/cons) → write design.md, manifest: Design=confirmed
-      → task-breakdown
-          1. Analyze design
-          2. Build dependency graph
-          3. Define tasks (self-contained, max 10 files)
-          4. Review with user → write tasks.md, manifest: Tasks=confirmed
-          5. Jira integration (optional)
-      → tdd (per task)
-          RED → GREEN → REFACTOR → commit → repeat
+  → Step 0: derive feature slug → create folder + manifest + changelog
+  → design skill
+      1. Explore status quo
+      2. Interview (one question at a time, with recommendations)
+      3. Goals / Constraints / Assumptions / Non-goals
+      4. Spec (GIVEN/WHEN/THEN) → gate: user confirms → write spec.md, manifest: Spec=confirmed
+      5. Approaches (pros/cons) → gate: user confirms → write design.md, manifest: Design=confirmed
+  → task-breakdown skill
+      1. Analyze the confirmed design
+      2. Build dependency graph
+      3. Define tasks (self-contained, max 10 files)
+      4. Review → gate: user confirms → write tasks.md, manifest: Tasks=confirmed
+  → Implementation choice: implement locally or create Jira tickets?
+      ├── Local: branch → tasks.json → per-task RED → GREEN → REFACTOR → verify → commit
+      └── Jira: create tickets (task-breakdown skill), then stop
+  → Revision: on any post-confirmation change → update in-place, mark draft, re-confirm, cascade downstream
 ```
 
-## Feature Folder Structure
+### design
 
-```
-docs/<feature-slug>/
-├── manifest.md     # status tracker (single source of truth for stage state)
-├── spec.md         # requirement specification
-├── design.md       # design approaches and chosen solution
-├── tasks.md        # task breakdown and dependency graph
-└── changelog.md    # chronological log of meaningful changes
-```
+Clarifies requirements and designs the solution. Runs a one-question-at-a-time interview with recommendations, surfaces assumptions and goals/constraints/non-goals, produces a GIVEN/WHEN/THEN spec, then evaluates design approaches with pros and cons.
 
-Documents are updated in-place. The file always reflects the current state. Git tracks the full diff history; the changelog captures *why* changes happened.
+### task-breakdown
 
-## Status Lifecycle
+Splits a confirmed design into self-contained, implementable tasks. Each task is a standalone work order — complete enough that an agent picks it up cold and delivers working code. Includes dependency graphs, per-task specs, documentation impact, and optional Jira integration.
 
-Each stage in the manifest progresses through three statuses:
+### tdd
 
-```
-pending → draft → confirmed
-```
-
-- **pending** — Stage hasn't started yet
-- **draft** — Output exists but not yet confirmed by user
-- **confirmed** — User explicitly approved. Gates the next phase
-
-A stage moves to `confirmed` only with explicit user approval. "Looks good" counts. Silence does not.
-
-When all three stages reach `confirmed`, the feature is ready for implementation.
-
-## Cascade Rule
-
-Changes flow downstream. When an upstream stage changes, check whether downstream stages still hold:
-
-- **Spec changed** → Does the design still hold? If not, update `design.md` too
-- **Design changed** → Do the tasks still reflect the design? If not, update `tasks.md` too
-
-Updated downstream stages drop back to `draft` and need explicit confirmation again. Stages that remain valid don't need changes — note in the changelog why they're unaffected.
-
-## Structure
-
-```
-.claude-plugin/
-├── marketplace.json         # Marketplace entry (enables /plugin marketplace add)
-└── plugin.json              # Plugin manifest (name, version, metadata)
-skills/
-├── workflow/SKILL.md        # Pipeline orchestrator + manifest/changelog management
-├── design/SKILL.md          # Requirement clarification & design
-├── task-breakdown/SKILL.md  # Task splitting & Jira integration
-└── tdd/SKILL.md             # Test-driven development cycle
-```
+Enforces Red-Green-Refactor TDD for all implementation work. Guides the cycle: write a failing test (RED), implement the minimum code to pass (GREEN), clean up (REFACTOR). Covers test naming (DAMP), Arrange-Act-Assert structure, and language-specific conventions.
