@@ -1,7 +1,7 @@
 {
   "name": "agent-skills",
   "version": "0.1.0",
-  "description": "A structured software engineering workflow: from requirement clarification through design, task breakdown, and test-driven implementation.",
+  "description": "A structured software engineering workflow: from requirement clarification through design, task breakdown, and test-driven implementation. Also includes a PR scorecard skill for pull request risk triage.",
   "author": {
     "name": "Gowtham Girithar",
     "url": "https://github.com/GowthamGirithar"
@@ -15,6 +15,8 @@
     "workflow",
     "design",
     "task-breakdown",
-    "tdd"
+    "tdd",
+    "pr-scorecard",
+    "code-review"
   ]
 }

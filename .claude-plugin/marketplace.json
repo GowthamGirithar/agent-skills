@@ -9,7 +9,7 @@
     {
       "name": "agent-skills",
       "source": "./",
-      "description": "Skills that enforce a structured engineering pipeline — requirement clarification, architectural design, self-contained task breakdown, and Red-Green-Refactor TDD, with per-feature stage documents and status tracking.",
+      "description": "Skills that enforce a structured engineering pipeline — requirement clarification, architectural design, self-contained task breakdown, and Red-Green-Refactor TDD, with per-feature stage documents and status tracking. Includes a PR scorecard skill for pull request risk triage.",
       "category": "engineering",
       "keywords": [
         "engineering",
@@ -17,7 +17,9 @@
         "workflow",
         "design",
         "task-breakdown",
-        "tdd"
+        "tdd",
+        "pr-scorecard",
+        "code-review"
       ]
     }
   ]
