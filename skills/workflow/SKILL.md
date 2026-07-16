@@ -217,9 +217,11 @@ After the task list is confirmed, ask:
 
 ### Step 4: Local Implementation — Task Execution Loop
 
-**Before writing a single line of code:** use the Read tool to load `references/local-implementation.md` into your context now. Then follow every step in that file in order — Setup first (base branch, naming scheme, `gh` auth, tasks.json), then the per-task loop: cut a stacked branch → RED→GREEN→REFACTOR→verify→commit → push → open PR. Do not rely on memory of the reference; load it and execute it step by step.
+**Before writing a single line of code:** use the Read tool to load `references/local-implementation.md` into your context now. Then follow every step in that file in order — Setup first (base branch, naming scheme, `gh` auth, tasks.json), then the orchestrator loop. Do not rely on memory of the reference; load it and execute it step by step.
 
-Each task becomes its **own stacked branch and PR**, cut from its dependency's branch (or the base branch if it has none), so the reviewer gets small dependency-ordered PRs rather than one monolith. The Setup step is the **only** gate — it confirms the base branch, branch-naming scheme, and that push/PR is possible. Once Setup passes, the loop runs fully autonomously to completion (implement → verify → commit → push → PR → clear context → next task), stopping only for a genuine blocker. See the Autonomy Contract in that file.
+The main session runs as an **orchestrator**: after Setup, it delegates each task to a **fresh sub-agent** (one task per sub-agent, sequential) that implements it end-to-end — cut a stacked branch → RED→GREEN→REFACTOR→verify→commit → push → open PR → return a compact summary. This is how each task gets a lean, fresh context window; the main session can't clear its own context mid-run, so delegation is the mechanism. The orchestrator records each result in `tasks.json` and carries cross-task learnings forward via its `notes` array.
+
+Each task becomes its **own stacked branch and PR**, cut from its dependency's branch (or the base branch if it has none), so the reviewer gets small dependency-ordered PRs rather than one monolith. The Setup step is the **only** gate — it confirms the base branch, branch-naming scheme, and that push/PR is possible. Once Setup passes, the orchestrator runs fully autonomously to completion, stopping only for a genuine blocker a sub-agent surfaces. See the Autonomy Contract in that file.
 
 
 ### Step 5: Revision

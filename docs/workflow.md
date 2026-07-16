@@ -50,7 +50,7 @@ To prevent misaligned implementations, the workflow surfaces hidden assumptions 
 - **Automated ticket management** — the agent syncs to JIRA directly and tracks tickets in workspace docs; a changed plan updates the existing ticket instead of delete-and-recreate.
 - **Autonomous local implementation** — tasks are hyper-focused micro-units, so local implementation runs unsupervised.
 - **The RALPH loop** — local execution follows: `RED → GREEN → REFACTOR → VERIFY → COMMIT`.
-- **Context flushing and tracking** — context is cleared fully at the end of each task to prevent bloat/degradation over long sessions; progress is tracked in `tasks.json`.
+- **Orchestrator + per-task sub-agent** — the main session orchestrates and delegates each task to a fresh sub-agent (one task at a time, sequential), so every task runs in a lean, isolated context that's discarded on return — preventing bloat/degradation over long sessions. Progress and cross-task learnings are tracked in `tasks.json`.
 
 ## Artifacts and documents generated
 
