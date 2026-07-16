@@ -1,6 +1,6 @@
 # Agent Skills
 
-A collection of skills that enforce a structured software engineering workflow: from requirement clarification through design, task breakdown, and test-driven implementation — with per-feature stage documents, a manifest for status tracking, and a changelog for traceability.
+A collection of skills that enforce a structured software engineering workflow: from requirement clarification through design, task breakdown, and test-driven implementation — with per-feature stage documents, a manifest for status tracking, and a changelog for traceability. Also includes a standalone PR scorecard skill for fast pull request risk triage.
 
 See [docs/EVOLUTION.md](docs/EVOLUTION.md) for the design rationale — why vibe coding and existing spec-driven tools fell short, and how this workflow's architecture addresses those gaps.
 
@@ -69,3 +69,7 @@ Splits a confirmed design into self-contained, implementable tasks. Each task is
 ### tdd
 
 Enforces Red-Green-Refactor TDD for all implementation work. Guides the cycle: write a failing test (RED), implement the minimum code to pass (GREEN), clean up (REFACTOR). Covers test naming (DAMP), Arrange-Act-Assert structure, and language-specific conventions.
+
+### pr-scorecard
+
+Standalone triage skill — scores a pull request across four independent axes (**Correctness**, **Impact**, **Alignment**, **Security**) so a reviewer knows in ten seconds where to focus. Every score is backed by concrete `file:line` evidence, and the Correctness rationale always states test status explicitly (added/updated, existing coverage, or none found). Outputs a scorecard plus a review-routing recommendation — it's a triage layer, not a replacement for deep or security review. See [skills/pr-scorecard/references/rubric.md](skills/pr-scorecard/references/rubric.md) for the full signal rubric.
