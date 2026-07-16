@@ -50,6 +50,8 @@ If no ticket is linked or reachable, say so and score scope alignment on descrip
 
 For each axis assign **Low / Medium / High** using the rubric, and write **one line of rationale plus the driving evidence** as `file:line` references. Do not emit a bare number — the evidence is what makes it actionable. When signals are mixed, name the tension (e.g. "Medium: solid tests, but touches the checkout total calculation").
 
+**Correctness must always state test status explicitly** — say whether tests were added/updated for this change, whether existing tests cover it, or that no tests were found, e.g. "Medium: logic changed in `pricing.go:40`, no new tests" or "High: covered by `pricing_test.go:88-104`." Testing gaps are one of the main things reviewers rely on this scorecard to surface, so never leave test status implicit in a Correctness line.
+
 Prefer being **specific over exhaustive**. Three sharp evidence points beat ten vague ones.
 
 ## Step 4 — Output: scorecard + review routing

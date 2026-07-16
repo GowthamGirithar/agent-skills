@@ -27,6 +27,8 @@ Polarity differs by axis — keep it straight when scoring:
 
 Correctness is about *how likely it works*, independent of how bad a bug would be — that's Impact.
 
+**Always name test status in the rationale** — which tests were added/updated, which existing tests cover the change, or that none were found. Testing evidence is the strongest single signal here, and a triage tool that stays quiet about missing tests defeats one of its main purposes.
+
 ## Impact
 
 *What is the blast radius if this change is wrong? Independent of how likely it is to be wrong. High = look harder.*
