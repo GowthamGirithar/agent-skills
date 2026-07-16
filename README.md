@@ -53,7 +53,7 @@ requirement (user)
       3. Define tasks (self-contained, max 10 files)
       4. Review → gate: user confirms → write tasks.md, manifest: Tasks=confirmed
   → Implementation choice: implement locally or create Jira tickets?
-      ├── Local: branch → tasks.json → per-task RED → GREEN → REFACTOR → verify → commit
+      ├── Local: base branch → tasks.json → per-task stacked branch: RED → GREEN → REFACTOR → verify → commit → push → PR
       └── Jira: create tickets (task-breakdown skill), then stop
   → Revision: on any post-confirmation change → update in-place, mark draft, re-confirm, cascade downstream
 ```

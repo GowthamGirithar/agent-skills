@@ -16,7 +16,7 @@ Requirement Clarification (design skill)
 Task Breakdown (task-breakdown skill)
   ↓ user confirms tasks
   ↓ Ask: implement locally or create Jira tickets?
-  ├── Local (Task Execution Loop): tasks.json → per-task: implement → verify → commit
+  ├── Local (Task Execution Loop): tasks.json → per-task stacked branch: implement → verify → commit → push → PR
   └── Jira: create tickets (via task-breakdown skill)
 ```
 
@@ -217,9 +217,9 @@ After the task list is confirmed, ask:
 
 ### Step 4: Local Implementation — Task Execution Loop
 
-**Before writing a single line of code:** use the Read tool to load `references/local-implementation.md` into your context now. Then follow every step in that file in order — branch first, tasks.json second, then the per-task RED→GREEN→REFACTOR→verify→commit loop. Do not rely on memory of the reference; load it and execute it step by step.
+**Before writing a single line of code:** use the Read tool to load `references/local-implementation.md` into your context now. Then follow every step in that file in order — Setup first (base branch, naming scheme, `gh` auth, tasks.json), then the per-task loop: cut a stacked branch → RED→GREEN→REFACTOR→verify→commit → push → open PR. Do not rely on memory of the reference; load it and execute it step by step.
 
-The first step in that file is asking the user for a branch name — this is the **only** gate in the loop and is not optional. Once the branch exists, the loop runs fully autonomously to completion (implement → verify → commit → clear context → next task), stopping only for a genuine blocker. See the Autonomy Contract in that file.
+Each task becomes its **own stacked branch and PR**, cut from its dependency's branch (or the base branch if it has none), so the reviewer gets small dependency-ordered PRs rather than one monolith. The Setup step is the **only** gate — it confirms the base branch, branch-naming scheme, and that push/PR is possible. Once Setup passes, the loop runs fully autonomously to completion (implement → verify → commit → push → PR → clear context → next task), stopping only for a genuine blocker. See the Autonomy Contract in that file.
 
 
 ### Step 5: Revision
