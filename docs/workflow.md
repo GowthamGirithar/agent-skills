@@ -1,4 +1,4 @@
-# The Evolution of the Agent Skill
+# The Evolution of the Workflow
 
 Why this workflow exists, and how it got its current shape.
 
