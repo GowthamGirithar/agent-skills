@@ -28,7 +28,7 @@ Mind the **polarity**, because a reviewer scans this column fast:
 
 ## Step 1 — Gather the PR
 
-Collect three things, using whatever tools this environment provides — a GitHub/GitLab MCP, the `gh`/`glab` CLI, a local `git diff` against base, or a PR URL you can fetch. Use what's available; don't assume a specific tool. State in the output which source you used.
+Collect three things, using whatever tools this environment provides — a GitHub/GitLab MCP, the `gh`/`glab` CLI, a local `git diff` against base, or a PR URL you can fetch. Use what's available; don't assume a specific tool.
 
 1. **PR metadata** — title, description/body, author, head/base branch, labels, and CI status. This is what the change *claims* to do.
 2. **The actual diff** — the changed files and their patch hunks. The classification lives in the hunks, not the metadata, so always get the real diff. Strongly prefer a true **base…head comparison** — `gh pr diff`, a GitHub/GitLab "compare" API, or a local `git diff base...head` if the repo is available — over reconstructing it from individual commits. Commit-by-commit reconstruction is a fallback of last resort: branches with "merge base into feature" commits make first-parent walks misleading (you can walk straight back to base without passing through the real feature commits, or land on the wrong side of a merge), so a scorecard built this way may miss or misattribute changes. If you had to fall back to it, say so plainly in the output rather than presenting the reconstruction as a complete diff. If you can also see how a changed symbol is used elsewhere (its callers), do — that's your blast-radius evidence for Impact.
