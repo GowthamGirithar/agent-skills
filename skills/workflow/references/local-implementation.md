@@ -52,7 +52,21 @@ Run this loop unattended, task after task, until all tasks are `done` or a genui
 
 3. **Verify** — Run the full test suite. All tests must pass before moving on.
 
-4. **Commit** — Commit with a message scoped to this task. Append a changelog entry.
+4. **Commit** — Commit with a message scoped to this task, using Conventional Commits format: `<type>(<scope>): <description>`. Pick the `type` from the table below. Append a changelog entry.
+
+   | Type       | Purpose                                 |
+   |------------|-----------------------------------------|
+   | `feat`     | New feature                             |
+   | `fix`      | Bug fix                                 |
+   | `docs`     | Documentation only                      |
+   | `style`    | Formatting/style (no logic)             |
+   | `refactor` | Code refactor (no feature/fix)          |
+   | `perf`     | Performance improvement                 |
+   | `test`     | Add/update tests                        |
+   | `build`    | Build system/dependencies               |
+   | `ci`       | CI/config changes                       |
+   | `chore`    | Maintenance/misc                        |
+   | `revert`   | Revert commit                           |
 
 5. **Mark done** — Update `status` to `done` in `tasks.json`. Pick the next eligible task.
 
