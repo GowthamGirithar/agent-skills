@@ -10,6 +10,10 @@ The Setup gate is the one place the loop stops for the user. It confirms the bas
 
 Once Setup passes, run the entire task list to completion **without pausing for confirmation** — do not ask "shall I continue?", do not wait for approval to commit, push, or open a PR, do not stop between tasks. The tasks and design are already confirmed; stopping to check in would only stall a plan the user already approved.
 
+Note: passing Setup stops the *loop* from pausing between tasks — it can't suppress the harness's own per-tool permission prompts, which depend on the user's permission mode. Mention this at Setup so the user can switch modes if they want zero interruptions.
+
+Delegation applies to every task list, no matter how short — never implement inline instead of spawning a sub-agent. Before any Edit/Write in the orchestrator's own context, ask: *am I delegating this, or doing it myself?*
+
 Stop early only for a genuine blocker that makes correct progress impossible:
 - The current task's description is ambiguous or contradicts the code, and no reasonable interpretation is safe.
 - A test cannot be made to pass without a decision the task doesn't cover (missing dependency, external credential, a design gap).
