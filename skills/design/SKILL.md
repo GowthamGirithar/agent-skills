@@ -45,6 +45,9 @@ Keep asking until you and the user have covered:
 - Security implications
 - Migration/rollback needs
 - Backward compatability
+- Input validation rules -- only when the feature introduces or touches a user-facing or API input field: required vs. optional, type and format (numeric range, string pattern, enum, free-text length/allowed-characters/sanitization -- whichever applies to the field's type). Leave authz and who's allowed to set what to the security bullet above; this one is about what shape of value the field itself accepts. Skip if nothing in the change accepts input.
+- SLOs -- only when the feature is or touches a service, API, or endpoint with its own runtime behavior: target latency (e.g. p99), availability, and acceptable error rate. Skip for changes with no independent runtime surface (e.g. a pure data-model rename).
+- Observability -- only when the feature has a runtime surface worth watching: what should be measured (counters, histograms), what gets logged at key decision points, what should be traced, and what should alert if the SLO is breached.
 
 Stop when both sides have shared understanding. Not before.
 
