@@ -2,35 +2,7 @@
 
 A collection of skills that enforce a structured software engineering workflow: from requirement clarification through design, task breakdown, and test-driven implementation — with per-feature stage documents, a manifest for status tracking, and a changelog for traceability. Also includes a standalone PR scorecard skill for fast pull request risk triage.
 
-See [docs/EVOLUTION.md](docs/EVOLUTION.md) for the design rationale — why vibe coding and existing spec-driven tools fell short, and how this workflow's architecture addresses those gaps.
-
-## Installation
-
-### Option 1 — Claude Code plugin (recommended)
-
-Read-only, always-current. Install once, then pull updates with `/plugin update`.
-
-```
-/plugin marketplace add GowthamGirithar/agent-skills
-/plugin install agent-skills@gowtham
-```
-
-Or from the shell:
-
-```bash
-claude plugin marketplace add GowthamGirithar/agent-skills
-claude plugin install agent-skills@gowtham
-```
-
-### Option 2 — `skills` CLI (cross-agent, editable)
-
-A generic installer that works with 20+ agents (Claude Code, Cursor, Copilot,
-and more). Pick the skills and target agent interactively; it copies editable
-files into your project.
-
-```bash
-npx skills@latest add GowthamGirithar/agent-skills
-```
+See [docs/workflow.md](docs/workflow.md) for the design rationale behind the workflow — why vibe coding and existing spec-driven tools fell short, and how this workflow's architecture addresses those gaps — and [docs/pr-scorecard.md](docs/pr-scorecard.md) for the motivation behind the PR scorecard skill.
 
 ## Skills
 
@@ -73,3 +45,31 @@ Enforces Red-Green-Refactor TDD for all implementation work. Guides the cycle: w
 ### pr-scorecard
 
 Standalone triage skill — scores a pull request across four independent axes (**Correctness**, **Impact**, **Alignment**, **Security**) so a reviewer knows in ten seconds where to focus. Every score is backed by concrete `file:line` evidence, and the Correctness rationale always states test status explicitly (added/updated, existing coverage, or none found). Outputs a scorecard plus a review-routing recommendation — it's a triage layer, not a replacement for deep or security review. See [skills/pr-scorecard/references/rubric.md](skills/pr-scorecard/references/rubric.md) for the full signal rubric.
+
+## Installation
+
+### Option 1 — Claude Code plugin (recommended)
+
+Read-only, always-current. Install once, then pull updates with `/plugin update`.
+
+```
+/plugin marketplace add GowthamGirithar/agent-skills
+/plugin install agent-skills@gowtham
+```
+
+Or from the shell:
+
+```bash
+claude plugin marketplace add GowthamGirithar/agent-skills
+claude plugin install agent-skills@gowtham
+```
+
+### Option 2 — `skills` CLI (cross-agent, editable)
+
+A generic installer that works with 20+ agents (Claude Code, Cursor, Copilot,
+and more). Pick the skills and target agent interactively; it copies editable
+files into your project.
+
+```bash
+npx skills@latest add GowthamGirithar/agent-skills
+```
