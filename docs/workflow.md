@@ -62,5 +62,4 @@ To prevent misaligned implementations, the workflow surfaces hidden assumptions 
 | `changelog.md` | Chronological record of every change |
 
 ## Future roadmap
-- **LLM wiki** — a companion to the ADR process that preserves institutional codebase knowledge for autonomous agents.
 - **Automated code review/ Verifier ** — deep, agentic peer review built into the cycle.
