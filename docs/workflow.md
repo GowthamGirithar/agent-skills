@@ -62,8 +62,5 @@ To prevent misaligned implementations, the workflow surfaces hidden assumptions 
 | `changelog.md` | Chronological record of every change |
 
 ## Future roadmap
-
-- **Token and cost tracking** — real-time cost data alongside model signatures in each document.
 - **LLM wiki** — a companion to the ADR process that preserves institutional codebase knowledge for autonomous agents.
-- **Automated code review** — deep, agentic peer review built into the cycle.
-- **Sandbox auto-mode** — running the autonomous loop safely inside isolated, secure sandboxes.
+- **Automated code review/ Verifier ** — deep, agentic peer review built into the cycle.
